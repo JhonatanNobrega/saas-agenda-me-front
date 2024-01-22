@@ -30,5 +30,9 @@ import LoginForm from '@/components/auth/LoginForm.vue';
 
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-axios.get("http://localhost:8000/sanctum/csrf-cookie");
+axios.defaults.withXSRFToken = true;
+axios.get("http://localhost:8000/sanctum/csrf-cookie")
+    .then(() => {
+        axios.post("http://localhost:8000/api/login");
+    });
 </script>
