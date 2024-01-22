@@ -2289,6 +2289,11 @@ vue-router@^4.2.0:
   dependencies:
     "@vue/devtools-api" "^6.5.0"
 
+vue-tabler-icons@2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/vue-tabler-icons/-/vue-tabler-icons-2.9.0.tgz#94719ec10f7fa6dc99df2bc66ec71a6da4915c9c"
+  integrity sha512-iiAvfVJJb7Ldog2MDDkmX5Ne4gz5rxWn3AsTd2fr+h3m6yIY64e8QitOFb4vlitqM5fk3cLHFjZCje0R3dl87Q==
+
 vue@^3.3.0:
   version "3.4.15"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.4.15.tgz#91f979844ffca9239dff622ba4c79c5d5524b88c"
