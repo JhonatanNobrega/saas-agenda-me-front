@@ -35,7 +35,8 @@ axios.get("http://localhost:8000/sanctum/csrf-cookie")
     .then(() => {
         axios.post("http://localhost:8000/api/login", {
             email: "test@example.com",
-            password: "password"
+            // password: "password",
+            password: "password1",
         });
     });
 </script>
