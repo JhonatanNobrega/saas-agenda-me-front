@@ -1,16 +1,15 @@
 <template>
     <v-alert v-if="feedbackMessage" color="error" class="mb-2">{{ feedbackMessage }}</v-alert>
-    <v-form @submit.prevent="login">
+    <v-form @submit.prevent="submit">
         <v-row class="d-flex mb-3">
             <v-col cols="12">
                 <v-label class="font-weight-bold mb-1">E-mail</v-label>
-                <v-text-field v-model="email" :rules="[rules.required, rules.email]" variant="outlined"
-                    color="primary"></v-text-field>
+                <v-text-field v-model="email" :error-messages="errors.email" variant="outlined" color="primary" />
             </v-col>
             <v-col cols="12">
                 <v-label class="font-weight-bold mb-1">Senha</v-label>
-                <v-text-field v-model="password" :rules="[rules.required]" variant="outlined" type="password"
-                    color="primary"></v-text-field>
+                <v-text-field v-model="password" :error-messages="errors.password" variant="outlined" type="password"
+                    color="primary" />
             </v-col>
             <v-col cols="12" class="pt-0">
                 <div class="d-flex flex-wrap align-center ml-n2">
@@ -24,44 +23,52 @@
                 </div>
             </v-col>
             <v-col cols="12" class="pt-0">
-                <v-btn type="submit" :loading="loading" color="primary" size="large" block flat>Entrar</v-btn>
+                <v-btn type="submit" :loading="isSubmitting" color="primary" size="large" block flat>Entrar</v-btn>
             </v-col>
         </v-row>
     </v-form>
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import axios from 'axios';
+import { ref } from 'vue';
+import { useForm, useField } from 'vee-validate';
+import { object, string } from 'yup';
+import { toTypedSchema } from '@vee-validate/yup';
+import { useRouter } from 'vue-router';
+
+const schema = toTypedSchema(object({
+    email: string().email().required().label('E-mail'),
+    password: string().required().label('Senha'),
+}));
+const { handleSubmit, errors, isSubmitting } = useForm({ validationSchema: schema });
+
+const submit = handleSubmit(async (values) => {
+    await login(values);
+});
+
+const { value: email } = useField('email');
+const { value: password } = useField('password');
+
 
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
 
-const email = ref("test@example.com");
-const password = ref("password");
+// const email = ref("test@example.com");
+// const password = ref("password");
 const feedbackMessage = ref("");
-const loading = ref(false);
-
-const rules = {
-    required: value => !!value || 'Required.',
-    email: value => {
-        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        return pattern.test(value) || 'Invalid e-mail.'
-    },
-};
-
-function login() {
-    loading.value = true;
+const router = useRouter();
+function login(values) {
     feedbackMessage.value = "";
     axios.get("http://localhost:8000/sanctum/csrf-cookie")
         .then(() => {
             axios.post("http://localhost:8000/api/login", {
-                email: email.value,
-                password: password.value
+                email: values.email,
+                password: values.password
+            }).then(() => {
+                router.push({ name: 'dashboard' })
             }).catch(() => {
                 feedbackMessage.value = "Seu e-mail ou senha estão inválidos."
-            }).finally(() => {
-                loading.value = false;
             });
         });
 }
