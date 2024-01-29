@@ -40,7 +40,13 @@ const schema = toTypedSchema(object({
   email: string().email().required().label('E-mail'),
   password: string().required().label('Senha'),
 }));
-const { handleSubmit, errors, isSubmitting } = useForm({ validationSchema: schema });
+const { handleSubmit, errors, isSubmitting } = useForm({
+  validationSchema: schema,
+  initialValues: {
+    email: 'test@example.com',
+    password: 'password'
+  }
+});
 
 const submit = handleSubmit(async (values) => {
   await login(values);
