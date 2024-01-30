@@ -1,17 +1,10 @@
-import { useMeStore } from '@/store/me';
+import { auth } from '@/router/guards';
 
 export default [
     {
         path: '/login',
         component: () => import('@/layouts/blank/BlankLayout.vue'),
-        beforeEnter: (to, from, next) => {
-            const meStore = useMeStore();
-            if (meStore.isLoggedIn) {
-                next({ name: 'dashboard' });
-            } else {
-                next();
-            }
-        },
+        beforeEnter: auth,
         children: [
             {
                 name: 'login',
@@ -23,6 +16,7 @@ export default [
     {
         path: '/cadastrar',
         component: () => import('@/layouts/blank/BlankLayout.vue'),
+        beforeEnter: auth,
         children: [
             {
                 name: 'register',
