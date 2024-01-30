@@ -1,12 +1,12 @@
 <template>
   <div>
     Dashboard <br><br>
-    <pre>{{ authStore.user }}</pre> <br><br>
-    Tá logado jovem? {{ authStore.isLoggedIn }}
+    <pre>{{ meStore.user }}</pre> <br><br>
+    Tá logado jovem? {{ meStore.isLoggedIn }}
   </div>
 </template>
 
 <script setup>
-import { useAuthStore } from '@/store/auth';
-const authStore = useAuthStore();
+import { useMeStore } from '@/store/me';
+const meStore = useMeStore();
 </script>
