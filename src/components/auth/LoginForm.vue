@@ -59,9 +59,9 @@ const feedbackMessage = ref("");
 const authStore = useAuthStore();
 const router = useRouter();
 
-function login(values) {
-  feedbackMessage.value = "";
-  authStore
+async function login(values) {
+  feedbackMessage.value = '';
+  return authStore
     .login(values.email, values.password)
     .then(() => {
       router.push({ name: 'dashboard' })
