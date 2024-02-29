@@ -8,13 +8,7 @@
               <div class="d-flex justify-center py-4">
                 <Logo />
               </div>
-              <LoginForm />
-              <h6 class="text-h6 text-muted font-weight-medium d-flex justify-center align-center mt-3">
-                Novo no AgendaMe
-                <RouterLink :to="{ name: 'register' }"
-                  class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium pl-2">
-                  Crie uma conta</RouterLink>
-              </h6>
+              <ForgotPassword/>
             </v-card-item>
           </v-card>
         </v-col>
@@ -25,5 +19,5 @@
 
 <script setup>
 import Logo from '@/layouts/full/logo/Logo.vue';
-import LoginForm from '@/components/auth/LoginForm.vue';
+import ForgotPassword from '@/components/auth/ForgotPassword.vue';
 </script>
