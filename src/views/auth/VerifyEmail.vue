@@ -43,9 +43,9 @@ authStore.verifyEmail(token)
         status.value = 'success';
         feedbackMessage.value = 'E-mail verificado com sucesso!';
     })
-    .catch(() => {
+    .catch((e) => {
         status.value = 'error';
-        feedbackMessage.value = 'Erro ao verificar e-mail!';
+        feedbackMessage.value = e.message;
     })
     .finally(() => {
         loading.value = false

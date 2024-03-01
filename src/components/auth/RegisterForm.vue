@@ -55,15 +55,11 @@ const submit = handleSubmit(async (values) => {
     feedbackMessage.value = '';
     const authStore = useAuthStore();
     await authStore.register(values.first_name, values.email, values.password)
-        // .catch(() => {
-        //     feedbackMessage.value = 'E-mail já cadastrado!'
-        // });
         .then(async () => {
             await authStore.login(values.email, values.password)
             router.push({ name: 'dashboard' })
         })
         .catch((e) => {
-            console.log(e);
             feedbackMessage.value = e.message
         })
 });

@@ -53,8 +53,8 @@ const submit = handleSubmit(async (values) => {
     .resetPassword(values.token, values.password)
     .then(() => {
       emits('after-reset');
-    }).catch(() => {
-      feedbackMessage.value = 'Token inválido!'
+    }).catch((e) => {
+      feedbackMessage.value = e.message;
     });
 });
 

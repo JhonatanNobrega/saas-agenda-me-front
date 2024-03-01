@@ -59,8 +59,8 @@ const submit = handleSubmit(async (values) => {
     .login(values.email, values.password)
     .then(() => {
       router.push({ name: 'dashboard' })
-    }).catch(() => {
-      feedbackMessage.value = 'Seu e-mail ou senha estão inválidos.'
+    }).catch((e) => {
+        feedbackMessage.value = e.message;
     });
 });
 </script>

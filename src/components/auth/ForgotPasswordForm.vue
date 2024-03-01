@@ -41,8 +41,8 @@ const submit = handleSubmit(async (values) => {
     .forgotPassword(values.email)
     .then(() => {
       emits('after-request');
-    }).catch(() => {
-      feedbackMessage.value = 'Usuário não existe!'
+    }).catch((e) => {
+      feedbackMessage.value = e.message;
     });
 });
 </script>
